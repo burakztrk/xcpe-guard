@@ -1,0 +1,10 @@
+-dontobfuscate
+-keep class io.github.muntashirakon.adb.** { *; }
+-keep class org.conscrypt.** { *; }
+-keep class io.github.muntashirakon.crypto.** { *; }
+-dontwarn org.conscrypt.**
+-dontwarn javax.annotation.**
+-dontwarn sun.security.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**
+-dontwarn com.google.zxing.**

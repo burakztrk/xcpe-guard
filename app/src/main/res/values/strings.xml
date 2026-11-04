@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XCPE Guard</string>
+    <string name="adb_unreachable">Could not reach this device\'s debugging service</string>
+
+    <string name="info_pkg_xcpe">The XCPE backdoor itself. Placed in the firmware by the box maker (ODM Videostrong) and runs with system rights: it can silently install apps, run any command, record the screen and press keys. It is the core of the botnet Google took down.</string>
+    <string name="info_pkg_nexus">ABCNexus loader: downloads and runs the botnet\'s money-making modules (ad fraud and residential proxies that rent out your internet connection).</string>
+    <string name="info_pkg_grass">Listed by Google next to ABCNexus as part of the same toolkit.</string>
+    <string name="info_pkg_ntp">A dropper disguised as a system time service. Pushed after August 2026 to reinstall the botnet as a system app.</string>
+    <string name="info_pkg_sso">A dropper that installs the AppSalt proxy SDK, which sells your bandwidth to third parties.</string>
+    <string name="info_pkg_ota_service">HiddenView ad-fraud app, downloaded by the operators from GitHub. Clicks ads invisibly in the background.</string>
+    <string name="info_pkg_cboxtv">Host app for the Fission dynamic-code backdoor.</string>
+    <string name="info_pkg_gaganode">GaGaNode / IPCola proxy SDK: routes strangers\' traffic through your home connection.</string>
+    <string name="info_pkg_oem_qa">The maker\'s factory test app (BoxFactoryTest). On infected boxes it was updated together with the backdoor and has a service that installs APKs silently. Not needed after the box leaves the factory. Never open it: some boards switch into factory mode.</string>
+
+    <string name="chk_noadb_title">No debugging connection</string>
+    <string name="info_noadb">The checks run through the device\'s own debugging service (ADB). Open \"Connection settings\" and give the permission again; after a week unused, Android forgets it.</string>
+    <string name="chk_interrupted_title">The scan stopped early</string>
+    <string name="info_interrupted">The connection dropped during the scan. Scan again.</string>
+
+    <string name="chk_fw_title">Firmware changed</string>
+    <string name="chk_fw_changed">%1$s → %2$s. The reference lists were recorded again.</string>
+    <string name="info_fw">A firmware update changes the system legitimately, so the app records a fresh reference instead of raising alarms. If you did not install an update, take this seriously.</string>
+
+    <string name="st_removed">On the device, but removed for the user</string>
+    <string name="st_disabled">Switched off</string>
+    <string name="st_fixed_malware">Was ON. Switched off just now</string>
+    <string name="st_fix_failed">ON, and could not be switched off</string>
+    <string name="st_enabled_nofix">ON (auto-fix is off)</string>
+    <string name="chk_pkgs_title">XCPE packages</string>
+    <string name="chk_pkgs_none">None of the %d listed packages is on this device</string>
+    <string name="info_pkgs">The package names Google published for the XCPE backdoor, its loader and its droppers.</string>
+    <string name="st_suspicious_on">ON. Switching it off is recommended</string>
+
+    <string name="chk_watch_title">Apps you keep switched off</string>
+    <string name="chk_watch_ok">%d apps watched, all still off</string>
+    <string name="st_fixed_watch">Had been switched on again; switched off</string>
+    <string name="st_watch_on">Has been switched on again</string>
+    <string name="info_watch">Apps that were off at the first scan. Some firmware turns them back on; the app turns them off again.</string>
+
+    <string name="chk_baseline_title">Reference recorded</string>
+    <string name="chk_baseline">%d packages. From now on anything new is reported.</string>
+    <string name="info_baseline">The first scan writes down what is on the device, so later scans can spot what appeared.</string>
+    <string name="chk_new_title">New packages</string>
+    <string name="chk_new_none">Nothing new since the first scan</string>
+    <string name="st_new_sys">A new SYSTEM app appeared without a firmware update</string>
+    <string name="st_new_sys_fixed">A new SYSTEM app appeared without a firmware update; switched off</string>
+    <string name="info_new_sys">The droppers change their names and install themselves as system apps through a root exploit. A system app that appears without an update is the clearest sign.</string>
+    <string name="st_new_user">Newly installed app. Fine if you installed it.</string>
+    <string name="info_new_user">Apps from the Play Store or that you installed yourself show up here once.</string>
+
+    <string name="chk_proc_title">Running processes</string>
+    <string name="chk_proc_ok">No XCPE process is running</string>
+    <string name="info_proc">A switched-off app cannot run. A process here means something started it anyway.</string>
+
+    <string name="chk_a11y_title">Accessibility services</string>
+    <string name="chk_a11y_none">None enabled</string>
+    <string name="chk_a11y_list">Enabled: %s</string>
+    <string name="chk_a11y_fixed">Removed: %s</string>
+    <string name="info_a11y">The backdoor registers an accessibility service (AccessibilityKeyDetector) to read the screen and inject key presses. Only services you know should be here.</string>
+
+    <string name="chk_pp_title">Play Protect</string>
+    <string name="chk_pp_ok">On</string>
+    <string name="chk_pp_off">Switched off</string>
+    <string name="chk_pp_fixed">Had been switched off; switched on again</string>
+    <string name="info_pp">The backdoor turns off Google\'s app verification (package_verifier_user_consent = -1) so its installs are not checked.</string>
+
+    <string name="chk_props_title">System properties</string>
+    <string name="chk_props_ok">No persist.networkstack.* property</string>
+    <string name="info_props">The backdoor uses these properties to uninstall itself, stay out of the system partition and fake its install date.</string>
+
+    <string name="chk_oem_none">No APK in /oem</string>
+    <string name="chk_oem_xcpe_found">The backdoor\'s spare copy is here. It sits on a read-only partition and cannot be deleted, but it is harmless: the package that could install it is off. Its fingerprint is recorded; you will hear if it changes.</string>
+    <string name="chk_oem_xcpe_same">The backdoor\'s spare copy is still in place and nobody changed it. It cannot be deleted but it is harmless: the package that could install it is off.</string>
+    <string name="chk_oem_recorded">Fingerprint recorded; later scans compare against it.</string>
+    <string name="chk_oem_same">Same as at the first scan; nobody changed it.</string>
+    <string name="chk_oem_changed">CHANGED. New hash: %s</string>
+    <string name="chk_hash_bad">Identical to a hash Google published for XCPE</string>
+    <string name="info_oem">A file on the read-only /oem partition, written by the maker. Its fingerprint is compared on every scan.</string>
+    <string name="info_oem_xcpe">The backdoor\'s spare copy on the read-only /oem partition. If com.oemservice is removed, its boot receiver reinstalls it from here. It cannot be deleted without root, but it cannot run either while the package stays switched off, which this app makes sure of. A changed fingerprint would mean someone rewrote the partition.</string>
+    <string name="info_oem_factory">The maker\'s factory test app on the read-only /oem partition (see com.oem.qa).</string>
+    <string name="info_hash">Google published SHA-256 fingerprints of the malware. An identical fingerprint means the very same file.</string>
+
+    <string name="chk_privapp_title">System app folders</string>
+    <string name="info_privapp">The dropper creates a new folder under /system/priv-app to install itself as a privileged system app.</string>
+    <string name="chk_perm_title">Privileged permission files</string>
+    <string name="info_perm">The dropper writes a privapp-permissions XML that gives itself the right to install apps and reboot the device.</string>
+    <string name="chk_list_recorded">%d entries recorded</string>
+    <string name="chk_list_ok">Nothing new (%d entries)</string>
+    <string name="chk_list_new">New: %s</string>
+
+    <string name="chk_libs_title">Malicious native libraries</string>
+    <string name="chk_libs_ok">No libseccomp_guard, libexploit or the other listed files</string>
+    <string name="info_libs">libexploit.so gains root through ADB, libseccomp_guard.so stops the backdoor from being killed, the others run the proxy and ad-fraud agents.</string>
+
+    <string name="chk_net_title">Network connections</string>
+    <string name="chk_net_ok">%d open TCP connections checked; none to a C2 address or the MQTT ports</string>
+    <string name="chk_net_odd">System connections to port 8000 outside your network: %s</string>
+    <string name="info_net">The botnet is controlled over MQTT (ports 3885–3887) from known addresses. Every live connection is matched against them.</string>
+
+    <string name="chk_dns_title">C2 names (DNS)</string>
+    <string name="chk_dns_ok">None of the %d names resolves. Your network blocks them.</string>
+    <string name="chk_dns_open">Still resolves:\n%s</string>
+    <string name="info_dns">Not a sign of infection: it shows whether your network (router, AdGuard, Pi-hole) blocks the botnet\'s servers. If they resolve, add them to your DNS filter.</string>
+
+    <string name="chk_pdns_title">Private DNS</string>
+    <string name="chk_pdns_auto">Automatic</string>
+    <string name="chk_pdns_mode">Mode: %s</string>
+    <string name="info_pdns">With Private DNS on \"Automatic\", Android may send every lookup encrypted to a public resolver such as 1.1.1.1, past your AdGuard or Pi-hole. Turn it off if you filter DNS at home.</string>
+
+    <string name="chk_adb_title">Debugging (ADB)</string>
+    <string name="chk_adb_on">On right now</string>
+    <string name="chk_adb_off">Off. The app switches it on only for a scan.</string>
+    <string name="chk_adb_no_toggle">The app cannot switch it by itself yet; connect once from \"Connection settings\".</string>
+    <string name="info_adb">The app scans through the device\'s own debugging service. Between scans it stays off, so nothing on your network can use it.</string>
+
+    <string name="notif_channel">XCPE alerts</string>
+    <string name="notif_title">XCPE Guard: action taken</string>
+    <string name="notif_text">%1$d fixed, %2$d need attention</string>
+
+    <string name="pair_title">Pair with XCPE Guard</string>
+    <string name="pair_step1">Open \"Wireless debugging\" and switch it on</string>
+    <string name="pair_step2">Choose \"Pair device with pairing code\"</string>
+    <string name="pair_step3">Leave the code on screen. A keypad will appear here.</string>
+    <string name="pair_waiting">Waiting for the pairing screen…  (Back closes this panel)</string>
+    <string name="pair_enter">Type the 6-digit code shown behind this panel</string>
+    <string name="pair_pairing">Pairing…</string>
+    <string name="pair_done">Paired ✓  Opening XCPE Guard…</string>
+
+    <string name="setup_title">Set up</string>
+    <string name="setup_intro">XCPE Guard checks this device for the XCPE botnet that Google exposed, and switches it off. It needs the device\'s own debugging permission once.</string>
+    <string name="setup_s1">Language</string>
+    <string name="setup_s2">Developer options</string>
+    <string name="setup_s3">Debugging permission</string>
+    <string name="setup_s4">First scan</string>
+    <string name="setup_tcp_prompt">Look at the screen: tick \"Always allow from this computer\", then \"Allow\".</string>
+    <string name="setup_failed">Could not connect: %s</string>
+
+    <string name="dev_title">Turn on Developer options</string>
+    <string name="dev_body">1. Open \"About\" (Settings → System → About).\n2. Select \"Android TV OS build\" and press OK 7 times, until it says you are a developer.\n3. Come back here.</string>
+    <string name="dev_open_about">Open \"About\"</string>
+    <string name="check_again">Check again</string>
+
+    <string name="connect_title">Give the debugging permission</string>
+    <string name="connect_body">The app reaches the device\'s own debugging service from inside the device; nothing leaves your network. Pick the way that is available.</string>
+    <string name="m_tcp_title">USB / network debugging</string>
+    <string name="m_available">Available</string>
+    <string name="m_closed">Not open</string>
+    <string name="m_tcp_body_open">This device already listens for debugging. Press Connect and answer \"Always allow\" on the screen.</string>
+    <string name="m_tcp_body_closed">Turn on \"USB debugging\" in Developer options, then come back. If it stays closed, use Wireless debugging.</string>
+    <string name="m_tcp_connect">Connect</string>
+    <string name="open_dev_settings">Open Developer options</string>
+    <string name="m_wifi_title">Wireless debugging</string>
+    <string name="m_wifi_badge">Android 11+</string>
+    <string name="m_wifi_body">A small panel will stay on top of Settings. Switch on Wireless debugging, choose \"Pair device with pairing code\" and type the code into the panel.</string>
+    <string name="m_wifi_body_overlay">First allow \"Display over other apps\" for XCPE Guard, so the panel can sit on top of Settings. If the button does nothing: Settings → Apps → Special app access → Display over other apps.</string>
+    <string name="m_wifi_overlay">Allow display over other apps</string>
+    <string name="m_wifi_start">Start pairing</string>
+
+    <string name="scanning">Scanning…</string>
+    <string name="scan_now">Scan now</string>
+    <string name="adb_off_now">Switch debugging off now</string>
+    <string name="connection_settings">Connection settings</string>
+    <string name="switch_language">Türkçe</string>
+    <string name="source_line">Source: Google Threat Intelligence report</string>
+
+    <string name="st_scanning">Scanning…</string>
+    <string name="st_never">Not scanned yet</string>
+    <string name="st_noadb">No connection</string>
+    <string name="st_alarm">Threat found</string>
+    <string name="st_fixed">Problems fixed</string>
+    <string name="st_warn">Needs a look</string>
+    <string name="st_clean">Device is clean</string>
+    <string name="scan_prompt_hint">If the screen asks \"Allow debugging?\", tick \"Always allow\" and press Allow.</string>
+    <string name="counts">%1$d alarms · %2$d fixed · %3$d warnings</string>
+    <string name="last_scan">Last scan: %s</string>
+    <string name="next_scan">Next scan: %s</string>
+    <string name="method_tcp">Connected through USB / network debugging</string>
+    <string name="method_wireless">Connected through Wireless debugging</string>
+    <string name="method_none">Not connected</string>
+    <string name="no_report">No report yet. Press \"Scan now\".</string>
+
+    <string name="sec_malware">Malware packages</string>
+    <string name="sec_malware_d">The apps Google named as the XCPE botnet</string>
+    <string name="sec_persistence">Persistence</string>
+    <string name="sec_persistence_d">How the botnet would come back: spare copies, new system apps, switched-on apps</string>
+    <string name="sec_suspicious">Suspicious maker apps</string>
+    <string name="sec_suspicious_d">Not malware by name, but shipped next to it</string>
+    <string name="sec_settings">Settings and processes</string>
+    <string name="sec_settings_d">What the backdoor changes to stay hidden</string>
+    <string name="sec_network">Network</string>
+    <string name="sec_network_d">Live connections and whether your network blocks the botnet</string>
+
+    <string name="lvl_alarm">ALARM</string>
+    <string name="lvl_fixed">FIXED</string>
+    <string name="lvl_warn">WARNING</string>
+    <string name="lvl_info">INFO</string>
+    <string name="lvl_ok">CLEAN</string>
+
+    <string name="history">History</string>
+    <string name="history_row">%1$s   alarms %2$d · fixed %3$d · warnings %4$d</string>
+    <string name="history_noadb">no connection</string>
+    <string name="st_malware_off">Safely switched off: it cannot run, start at boot or reach the internet.</string>
+    <string name="st_malware_removed">Removed for the user: it cannot run.</string>
+    <string name="st_suspicious_off">Safely switched off: its silent installer cannot run.</string>
+    <string name="no_browser">No browser on this device. Open the link on your phone.</string>
+    <string name="fixed_banner_title">%d problems fixed in the last 7 days</string>
+    <string name="fixed_banner_body">They were switched off or put back the way they belong. Details below; everything can be undone.</string>
+    <string name="st_suspicious_fixed">Was ON. Switched off: its silent installer cannot run.</string>
+    <string name="fixed_at">Fixed: %s</string>
+    <string name="pair_failed_type">Wrong code or pairing failed (%s). Type the code again.</string>
+    <string name="pair_failed_reopen">Pairing failed (%s). Open \"Pair device with pairing code\" again; a new code will appear.</string>
+    <string name="schedule_daily">Scheduled scan: daily</string>
+    <string name="schedule_off">Scheduled scan: off</string>
+    <string name="next_scan_off">Scheduled scan is off; scan by hand</string>
+    <string name="version_fmt">Version %1$s (%2$d)</string>
+    <string name="about_body">Free and open source. No accounts, no analytics. Built after Google exposed the XCPE botnet, so every infected box can be cleaned by its owner.</string>
+    <string name="github">GitHub</string>
+    <string name="back">Back</string>
+    <string name="share_title">Share it with a friend who has a similar box</string>
+    <string name="share_body">More than a million TV boxes came with this backdoor. Scan the code with a phone to open the project.</string>
+    <string name="share_scan">Scan with your phone camera</string>
+    <string name="share_button">Share</string>
+    <string name="share_none">Nothing on this device can share. Use the QR code.</string>
+    <string name="share_text">XCPE Guard finds and switches off the XCPE botnet on Android TV boxes: %s</string>
+    <string name="fix_another">Fix Another Device</string>
+</resources>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adb_unreachable">Cihazın hata ayıklama servisine ulaşılamadı</string>
+
+    <string name="info_pkg_xcpe">XCPE arka kapısının kendisi. Kutunun üreticisi (ODM Videostrong) tarafından fabrika yazılımına konmuş, sistem yetkisiyle çalışır: sessizce uygulama kurabilir, her komutu çalıştırabilir, ekranı kaydedip tuşlara basabilir. Google\'ın çökerttiği botnetin çekirdeği budur.</string>
+    <string name="info_pkg_nexus">ABCNexus yükleyici: botnetin para kazanma modüllerini (reklam dolandırıcılığı ve internet bağlantını kiralayan proxy\'ler) indirip çalıştırır.</string>
+    <string name="info_pkg_grass">Google\'ın ABCNexus ile birlikte, aynı araç setinin parçası olarak listelediği paket.</string>
+    <string name="info_pkg_ntp">Sistem saat servisi kılığına girmiş bir dropper. Ağustos 2026\'dan sonra botneti sistem uygulaması olarak yeniden kurmak için gönderildi.</string>
+    <string name="info_pkg_sso">AppSalt proxy SDK\'sını kuran dropper; bağlantını üçüncü kişilere satar.</string>
+    <string name="info_pkg_ota_service">HiddenView reklam dolandırıcılığı uygulaması; operatörler GitHub\'dan indirir. Arka planda görünmeden reklamlara tıklar.</string>
+    <string name="info_pkg_cboxtv">Fission dinamik kod arka kapısını taşıyan uygulama.</string>
+    <string name="info_pkg_gaganode">GaGaNode / IPCola proxy SDK\'sı: yabancıların trafiğini ev bağlantın üzerinden geçirir.</string>
+    <string name="info_pkg_oem_qa">Üreticinin fabrika test uygulaması (BoxFactoryTest). Enfekte kutularda arka kapıyla birlikte güncellenmiş ve sessizce APK kuran bir servisi var. Kutu fabrikadan çıktıktan sonra gerekmez. Asla açma: bazı kartlar fabrika moduna geçer.</string>
+
+    <string name="chk_noadb_title">Hata ayıklama bağlantısı yok</string>
+    <string name="info_noadb">Kontroller cihazın kendi hata ayıklama servisi (ADB) üzerinden yapılır. \"Bağlantı ayarları\"ndan izni yeniden ver; bir hafta kullanılmazsa Android bu izni unutur.</string>
+    <string name="chk_interrupted_title">Tarama yarıda kaldı</string>
+    <string name="info_interrupted">Tarama sırasında bağlantı koptu. Yeniden tara.</string>
+
+    <string name="chk_fw_title">Firmware değişti</string>
+    <string name="chk_fw_changed">%1$s → %2$s. Karşılaştırma listeleri yeniden kaydedildi.</string>
+    <string name="info_fw">Firmware güncellemesi sistemi meşru olarak değiştirir; bu yüzden uygulama alarm vermek yerine yeni bir referans kaydeder. Güncelleme yüklemediysen bunu ciddiye al.</string>
+
+    <string name="st_removed">Cihazda var ama kullanıcı için kaldırılmış</string>
+    <string name="st_disabled">Kapalı</string>
+    <string name="st_fixed_malware">AÇIKTI. Az önce kapatıldı</string>
+    <string name="st_fix_failed">AÇIK ve kapatılamadı</string>
+    <string name="st_enabled_nofix">AÇIK (otomatik düzeltme kapalı)</string>
+    <string name="chk_pkgs_title">XCPE paketleri</string>
+    <string name="chk_pkgs_none">Listedeki %d paketin hiçbiri bu cihazda yok</string>
+    <string name="info_pkgs">Google\'ın XCPE arka kapısı, yükleyicisi ve dropper\'ları için yayımladığı paket adları.</string>
+    <string name="st_suspicious_on">AÇIK. Kapatılması önerilir</string>
+
+    <string name="chk_watch_title">Kapalı tuttuğun uygulamalar</string>
+    <string name="chk_watch_ok">%d uygulama izleniyor, hepsi hâlâ kapalı</string>
+    <string name="st_fixed_watch">Yeniden açılmıştı; kapatıldı</string>
+    <string name="st_watch_on">Yeniden açılmış</string>
+    <string name="info_watch">İlk taramada kapalı olan uygulamalar. Bazı firmware\'ler bunları yeniden açar; uygulama tekrar kapatır.</string>
+
+    <string name="chk_baseline_title">Referans kaydedildi</string>
+    <string name="chk_baseline">%d paket. Bundan sonra yeni gelen her şey raporlanır.</string>
+    <string name="info_baseline">İlk tarama cihazda ne olduğunu not eder; sonraki taramalar yeni ortaya çıkanı bu sayede yakalar.</string>
+    <string name="chk_new_title">Yeni paketler</string>
+    <string name="chk_new_none">İlk taramadan beri yeni bir şey yok</string>
+    <string name="st_new_sys">Firmware güncellemesi olmadan yeni bir SİSTEM uygulaması belirdi</string>
+    <string name="st_new_sys_fixed">Firmware güncellemesi olmadan yeni bir SİSTEM uygulaması belirdi; kapatıldı</string>
+    <string name="info_new_sys">Dropper\'lar isim değiştirir ve root açığıyla kendini sistem uygulaması olarak kurar. Güncelleme olmadan beliren bir sistem uygulaması en net işarettir.</string>
+    <string name="st_new_user">Yeni kurulan uygulama. Sen kurduysan sorun yok.</string>
+    <string name="info_new_user">Play Store\'dan ya da senin kurduğun uygulamalar burada bir kez görünür.</string>
+
+    <string name="chk_proc_title">Çalışan süreçler</string>
+    <string name="chk_proc_ok">Çalışan XCPE süreci yok</string>
+    <string name="info_proc">Kapalı bir uygulama çalışamaz. Burada bir süreç görünüyorsa bir şey onu yine de başlatmış demektir.</string>
+
+    <string name="chk_a11y_title">Erişilebilirlik servisleri</string>
+    <string name="chk_a11y_none">Açık servis yok</string>
+    <string name="chk_a11y_list">Açık: %s</string>
+    <string name="chk_a11y_fixed">Kaldırıldı: %s</string>
+    <string name="info_a11y">Arka kapı ekranı okumak ve tuş basmak için bir erişilebilirlik servisi (AccessibilityKeyDetector) açar. Burada sadece tanıdığın servisler olmalı.</string>
+
+    <string name="chk_pp_title">Play Protect</string>
+    <string name="chk_pp_ok">Açık</string>
+    <string name="chk_pp_off">Kapatılmış</string>
+    <string name="chk_pp_fixed">Kapatılmıştı; yeniden açıldı</string>
+    <string name="info_pp">Arka kapı, kurduğu uygulamalar denetlenmesin diye Google\'ın uygulama doğrulamasını kapatır (package_verifier_user_consent = -1).</string>
+
+    <string name="chk_props_title">Sistem özellikleri</string>
+    <string name="chk_props_ok">persist.networkstack.* özelliği yok</string>
+    <string name="info_props">Arka kapı bu özellikleri kendini kaldırmak, sistem bölümünün dışında kalmak ve kurulum tarihini sahtelemek için kullanır.</string>
+
+    <string name="chk_oem_none">/oem içinde APK yok</string>
+    <string name="chk_oem_xcpe_found">Arka kapının yedek kopyası burada. Salt-okunur bölümde olduğu için silinemez, ama zararsız: onu kurabilecek paket kapalı. Parmak izi kaydedildi; değişirse haber veririz.</string>
+    <string name="chk_oem_xcpe_same">Arka kapının yedek kopyası yerinde ve kimse değiştirmemiş. Silinemiyor ama zararsız: onu kurabilecek paket kapalı.</string>
+    <string name="chk_oem_recorded">Parmak izi kaydedildi; sonraki taramalarda karşılaştırılacak.</string>
+    <string name="chk_oem_same">İlk taramadakiyle aynı, kimse değiştirmemiş.</string>
+    <string name="chk_oem_changed">DEĞİŞMİŞ. Yeni hash: %s</string>
+    <string name="chk_hash_bad">Google\'ın XCPE için yayımladığı bir hash ile birebir aynı</string>
+    <string name="info_oem">Üreticinin yazdığı, salt-okunur /oem bölümündeki bir dosya. Parmak izi her taramada karşılaştırılır.</string>
+    <string name="info_oem_xcpe">Arka kapının salt-okunur /oem bölümündeki yedek kopyası. com.oemservice kaldırılırsa açılışta buradan yeniden kurulur. Root olmadan silinemez; ama paket kapalı kaldığı sürece çalışamaz, uygulama da bunu sağlar. Parmak izinin değişmesi birinin bu bölümü yeniden yazdığı anlamına gelir.</string>
+    <string name="info_oem_factory">Üreticinin salt-okunur /oem bölümündeki fabrika test uygulaması (bkz. com.oem.qa).</string>
+    <string name="info_hash">Google zararlı yazılımın SHA-256 parmak izlerini yayımladı. Aynı parmak izi, birebir aynı dosya demektir.</string>
+
+    <string name="chk_privapp_title">Sistem uygulaması klasörleri</string>
+    <string name="info_privapp">Dropper, kendini ayrıcalıklı sistem uygulaması olarak kurmak için /system/priv-app altında yeni bir klasör açar.</string>
+    <string name="chk_perm_title">Ayrıcalıklı izin dosyaları</string>
+    <string name="info_perm">Dropper, kendine uygulama kurma ve cihazı yeniden başlatma hakkı veren bir privapp-permissions XML dosyası yazar.</string>
+    <string name="chk_list_recorded">%d kayıt alındı</string>
+    <string name="chk_list_ok">Yeni bir şey yok (%d kayıt)</string>
+    <string name="chk_list_new">Yeni: %s</string>
+
+    <string name="chk_libs_title">Zararlı yerel kütüphaneler</string>
+    <string name="chk_libs_ok">libseccomp_guard, libexploit ve listedeki diğer dosyalar yok</string>
+    <string name="info_libs">libexploit.so ADB üzerinden root alır, libseccomp_guard.so arka kapının kapatılmasını engeller, diğerleri proxy ve reklam dolandırıcılığı ajanlarını çalıştırır.</string>
+
+    <string name="chk_net_title">Ağ bağlantıları</string>
+    <string name="chk_net_ok">%d açık TCP bağlantısı tarandı; hiçbiri C2 adresine ya da MQTT portlarına gitmiyor</string>
+    <string name="chk_net_odd">Ağının dışına port 8000 sistem bağlantıları: %s</string>
+    <string name="info_net">Botnet bilinen adreslerden MQTT ile (3885–3887 portları) yönetilir. Her canlı bağlantı bunlarla karşılaştırılır.</string>
+
+    <string name="chk_dns_title">C2 alan adları (DNS)</string>
+    <string name="chk_dns_ok">%d alan adının hiçbiri çözülmüyor. Ağın bunları engelliyor.</string>
+    <string name="chk_dns_open">Hâlâ çözülüyor:\n%s</string>
+    <string name="info_dns">Enfeksiyon işareti değildir: ağının (router, AdGuard, Pi-hole) botnet sunucularını engelleyip engellemediğini gösterir. Çözülüyorsa DNS filtrene ekle.</string>
+
+    <string name="chk_pdns_title">Özel DNS</string>
+    <string name="chk_pdns_auto">Otomatik</string>
+    <string name="chk_pdns_mode">Mod: %s</string>
+    <string name="info_pdns">Özel DNS \"Otomatik\" olduğunda Android tüm sorguları şifreli olarak 1.1.1.1 gibi genel bir sunucuya gönderip AdGuard ya da Pi-hole\'unu atlayabilir. Evde DNS filtresi kullanıyorsan kapat.</string>
+
+    <string name="chk_adb_title">Hata ayıklama (ADB)</string>
+    <string name="chk_adb_on">Şu an açık</string>
+    <string name="chk_adb_off">Kapalı. Uygulama yalnızca tarama için açar.</string>
+    <string name="chk_adb_no_toggle">Uygulama bunu henüz kendisi açıp kapatamıyor; \"Bağlantı ayarları\"ndan bir kez bağlan.</string>
+    <string name="info_adb">Uygulama cihazın kendi hata ayıklama servisi üzerinden tarar. Taramalar arasında kapalı kalır; böylece ağındaki hiçbir şey onu kullanamaz.</string>
+
+    <string name="notif_channel">XCPE uyarıları</string>
+    <string name="notif_title">XCPE Guard: işlem yapıldı</string>
+    <string name="notif_text">%1$d düzeltildi, %2$d dikkat istiyor</string>
+
+    <string name="pair_title">XCPE Guard ile eşle</string>
+    <string name="pair_step1">\"Kablosuz hata ayıklama\"yı aç</string>
+    <string name="pair_step2">\"Cihazı eşleme koduyla eşle\"yi seç</string>
+    <string name="pair_step3">Kodu ekranda bırak. Burada bir tuş takımı açılacak.</string>
+    <string name="pair_waiting">Eşleme ekranı bekleniyor…  (Geri bu paneli kapatır)</string>
+    <string name="pair_enter">Bu panelin arkasında görünen 6 haneli kodu gir</string>
+    <string name="pair_pairing">Eşleniyor…</string>
+    <string name="pair_done">Eşlendi ✓  XCPE Guard açılıyor…</string>
+
+    <string name="setup_title">Kurulum</string>
+    <string name="setup_intro">XCPE Guard bu cihazı Google\'ın ortaya çıkardığı XCPE botnetine karşı tarar ve onu kapatır. Bunun için cihazın kendi hata ayıklama iznine bir kez ihtiyacı var.</string>
+    <string name="setup_s1">Dil</string>
+    <string name="setup_s2">Geliştirici seçenekleri</string>
+    <string name="setup_s3">Hata ayıklama izni</string>
+    <string name="setup_s4">İlk tarama</string>
+    <string name="setup_tcp_prompt">Ekrana bak: \"Bu bilgisayardan her zaman izin ver\"i işaretle, sonra \"İzin ver\".</string>
+    <string name="setup_failed">Bağlanılamadı: %s</string>
+
+    <string name="dev_title">Geliştirici seçeneklerini aç</string>
+    <string name="dev_body">1. \"Hakkında\" ekranını aç (Ayarlar → Sistem → Hakkında).\n2. \"Android TV OS derlemesi\" satırına gel ve \"geliştirici oldunuz\" yazana kadar 7 kez OK\'a bas.\n3. Buraya geri dön.</string>
+    <string name="dev_open_about">\"Hakkında\"yı aç</string>
+    <string name="check_again">Tekrar kontrol et</string>
+
+    <string name="connect_title">Hata ayıklama iznini ver</string>
+    <string name="connect_body">Uygulama cihazın kendi hata ayıklama servisine cihazın içinden bağlanır; ağından dışarı hiçbir şey çıkmaz. Hangi yol kullanılabiliyorsa onu seç.</string>
+    <string name="m_tcp_title">USB / ağ hata ayıklama</string>
+    <string name="m_available">Kullanılabilir</string>
+    <string name="m_closed">Açık değil</string>
+    <string name="m_tcp_body_open">Bu cihaz zaten hata ayıklama bağlantısı kabul ediyor. Bağlan\'a bas ve ekranda \"Her zaman izin ver\" de.</string>
+    <string name="m_tcp_body_closed">Geliştirici seçeneklerinde \"USB hata ayıklama\"yı aç ve geri dön. Hâlâ kapalıysa Kablosuz hata ayıklamayı kullan.</string>
+    <string name="m_tcp_connect">Bağlan</string>
+    <string name="open_dev_settings">Geliştirici seçeneklerini aç</string>
+    <string name="m_wifi_title">Kablosuz hata ayıklama</string>
+    <string name="m_wifi_badge">Android 11+</string>
+    <string name="m_wifi_body">Ayarlar\'ın üstünde küçük bir panel kalacak. Kablosuz hata ayıklamayı aç, \"Cihazı eşleme koduyla eşle\"yi seç ve kodu panele yaz.</string>
+    <string name="m_wifi_body_overlay">Panel Ayarlar\'ın üstünde durabilsin diye önce XCPE Guard için \"Diğer uygulamaların üzerinde göster\" iznini ver. Düğme bir şey açmazsa: Ayarlar → Uygulamalar → Özel uygulama erişimi → Diğer uygulamaların üzerinde göster.</string>
+    <string name="m_wifi_overlay">Üstte gösterme iznini ver</string>
+    <string name="m_wifi_start">Eşlemeyi başlat</string>
+
+    <string name="scanning">Taranıyor…</string>
+    <string name="scan_now">Şimdi tara</string>
+    <string name="adb_off_now">Hata ayıklamayı şimdi kapat</string>
+    <string name="connection_settings">Bağlantı ayarları</string>
+    <string name="switch_language">English</string>
+    <string name="source_line">Kaynak: Google Threat Intelligence raporu</string>
+
+    <string name="st_scanning">Taranıyor…</string>
+    <string name="st_never">Henüz taranmadı</string>
+    <string name="st_noadb">Bağlantı yok</string>
+    <string name="st_alarm">Tehdit bulundu</string>
+    <string name="st_fixed">Sorunlar düzeltildi</string>
+    <string name="st_warn">Bakılması gerekiyor</string>
+    <string name="st_clean">Cihaz temiz</string>
+    <string name="scan_prompt_hint">Ekranda \"Hata ayıklamaya izin verilsin mi?\" çıkarsa \"Her zaman izin ver\"i işaretleyip İzin ver\'e bas.</string>
+    <string name="counts">%1$d alarm · %2$d düzeltildi · %3$d uyarı</string>
+    <string name="last_scan">Son tarama: %s</string>
+    <string name="next_scan">Sonraki tarama: %s</string>
+    <string name="method_tcp">USB / ağ hata ayıklama ile bağlı</string>
+    <string name="method_wireless">Kablosuz hata ayıklama ile bağlı</string>
+    <string name="method_none">Bağlı değil</string>
+    <string name="no_report">Henüz rapor yok. \"Şimdi tara\"ya bas.</string>
+
+    <string name="sec_malware">Zararlı paketler</string>
+    <string name="sec_malware_d">Google\'ın XCPE botneti olarak adlandırdığı uygulamalar</string>
+    <string name="sec_persistence">Kalıcılık</string>
+    <string name="sec_persistence_d">Botnet nasıl geri gelebilir: yedek kopyalar, yeni sistem uygulamaları, yeniden açılan uygulamalar</string>
+    <string name="sec_suspicious">Şüpheli üretici uygulamaları</string>
+    <string name="sec_suspicious_d">Adıyla zararlı değil, ama onunla birlikte gelmiş</string>
+    <string name="sec_settings">Ayarlar ve süreçler</string>
+    <string name="sec_settings_d">Arka kapının gizli kalmak için değiştirdikleri</string>
+    <string name="sec_network">Ağ</string>
+    <string name="sec_network_d">Canlı bağlantılar ve ağının botneti engelleyip engellemediği</string>
+
+    <string name="lvl_alarm">ALARM</string>
+    <string name="lvl_fixed">DÜZELTİLDİ</string>
+    <string name="lvl_warn">UYARI</string>
+    <string name="lvl_info">BİLGİ</string>
+    <string name="lvl_ok">TEMİZ</string>
+
+    <string name="history">Geçmiş</string>
+    <string name="history_row">%1$s   alarm %2$d · düzeltilen %3$d · uyarı %4$d</string>
+    <string name="history_noadb">bağlantı yok</string>
+    <string name="st_malware_off">Güvenli şekilde kapatıldı: çalışamaz, açılışta başlayamaz, internete bağlanamaz.</string>
+    <string name="st_malware_removed">Kullanıcı için kaldırılmış: çalışamaz.</string>
+    <string name="st_suspicious_off">Güvenli şekilde kapatıldı: sessiz kurulum servisi çalışamaz.</string>
+    <string name="no_browser">Bu cihazda tarayıcı yok. Linki telefonundan açabilirsin.</string>
+    <string name="fixed_banner_title">Son 7 günde %d sorun düzeltildi</string>
+    <string name="fixed_banner_body">Kapatıldılar ya da olması gerektiği hale getirildiler. Ayrıntılar aşağıda; hepsi geri alınabilir.</string>
+    <string name="st_suspicious_fixed">AÇIKTI. Kapatıldı: sessiz kurulum servisi artık çalışamaz.</string>
+    <string name="fixed_at">Düzeltildi: %s</string>
+    <string name="pair_failed_type">Kod yanlış ya da eşleme başarısız (%s). Kodu yeniden gir.</string>
+    <string name="pair_failed_reopen">Eşleme başarısız (%s). \"Eşleme kodu ile cihaz eşle\"yi yeniden aç; yeni bir kod çıkacak.</string>
+    <string name="schedule_daily">Otomatik tarama: Günde bir</string>
+    <string name="schedule_off">Otomatik tarama: Kapalı</string>
+    <string name="next_scan_off">Otomatik tarama kapalı; elle tara</string>
+    <string name="version_fmt">Sürüm %1$s (%2$d)</string>
+    <string name="about_body">Ücretsiz ve açık kaynak. Hesap yok, analiz yok. Google XCPE botnetini ortaya çıkardıktan sonra, enfekte her kutunun sahibi tarafından temizlenebilmesi için yapıldı.</string>
+    <string name="github">GitHub</string>
+    <string name="back">Geri</string>
+    <string name="share_title">Benzer kutusu olan bir arkadaşınla paylaş</string>
+    <string name="share_body">Bir milyondan fazla TV kutusu bu arka kapıyla geldi. Projeyi açmak için kodu telefonla okut.</string>
+    <string name="share_scan">Telefon kamerasıyla okut</string>
+    <string name="share_button">Paylaş</string>
+    <string name="share_none">Bu cihazda paylaşacak bir uygulama yok. QR kodu kullan.</string>
+    <string name="share_text">XCPE Guard, Android TV kutularındaki XCPE botnetini bulup kapatıyor: %s</string>
+    <string name="fix_another">Başka Cihazda Fixle</string>
+</resources>
