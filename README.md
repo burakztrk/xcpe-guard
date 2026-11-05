@@ -109,6 +109,12 @@ to the latest one. The workflow reads four repository secrets (Settings → Secr
 `KEYSTORE_BASE64` (the keystore, base64), `KEYSTORE_PASSWORD`, `KEY_ALIAS` and `KEY_PASSWORD`. Without them it only
 uploads an unsigned build artifact, because updates have to be signed with the same key every time.
 
+## Block it on your network
+
+XCPE Guard works on the box. To keep every device on your network away from the botnet's servers, add the
+[AdGuard blocklist](docs/adguard-blocklist.md) (154 rules from the same Google report) to AdGuard Home, or to any
+DNS filter that understands AdGuard syntax. The app's "C2 names (DNS)" row then turns green.
+
 ## Limits
 
 - **No root.** The backdoor's spare copy on the read-only `/oem` partition cannot be deleted. It cannot run either while

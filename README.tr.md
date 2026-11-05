@@ -110,6 +110,12 @@ sonuncuyu gösterir. İş akışı dört repo secret'ı okur (Settings → Secre
 (keystore'un base64 hali), `KEYSTORE_PASSWORD`, `KEY_ALIAS` ve `KEY_PASSWORD`. Bunlar yoksa sürüm yayımlamaz, yalnızca
 imzasız bir derleme yükler; çünkü güncellemelerin her seferinde aynı anahtarla imzalanması gerekir.
 
+## Ağında engelle
+
+XCPE Guard kutunun içinde çalışır. Ağındaki her cihazı botnetin sunucularından uzak tutmak için aynı Google raporundan
+çıkan [AdGuard engelleme listesini](docs/adguard-blocklist.md) (154 kural) AdGuard Home'a ya da AdGuard
+sözdizimini anlayan herhangi bir DNS filtresine ekle. Uygulamadaki "C2 alan adları (DNS)" satırı o zaman yeşile döner.
+
 ## Sınırlar
 
 - **Root yok.** Arka kapının salt-okunur `/oem` bölümündeki yedek kopyası silinemez. Paketi kapalı kaldığı sürece de
