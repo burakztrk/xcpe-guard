@@ -12,7 +12,7 @@
   <a href="https://github.com/burakztrk/xcpe-guard/releases/latest"><img src="https://img.shields.io/github/v/release/burakztrk/xcpe-guard?label=latest%20APK&color=81C995&labelColor=151A22" alt="Latest release"></a>
   <a href="https://github.com/burakztrk/xcpe-guard/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/burakztrk/xcpe-guard/release.yml?branch=main&label=build&labelColor=151A22" alt="Build"></a>
   <img src="https://img.shields.io/badge/Android-8.0%2B-81C995?labelColor=151A22" alt="Android 8.0+">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-PolyForm%20Noncommercial-8AB4F8?labelColor=151A22" alt="Licence"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-GPL--3.0-8AB4F8?labelColor=151A22" alt="Licence"></a>
 </p>
 
 <p align="center">
@@ -133,6 +133,5 @@ whether your network blocks them.
 
 ## Licence
 
-[PolyForm Noncommercial 1.0.0](LICENSE). The source is open. You may use, change and share it for any noncommercial
-purpose: personal use, research, education, charities, public institutions. Commercial use needs written permission
-from the author.
+[GPL-3.0](LICENSE). Free and open source: use it, study it, change it and share it, for any purpose. If you
+distribute a modified version, it has to stay open source under the same licence.

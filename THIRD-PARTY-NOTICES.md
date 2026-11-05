@@ -4,7 +4,7 @@ XCPE Guard bundles these libraries. Each keeps its own licence.
 
 | Library | Licence |
 |---|---|
-| [libadb-android](https://github.com/MuntashirAkon/libadb-android) by Muntashir Al-Islam | Apache-2.0 (dual-licensed with GPL-3.0-or-later; used under Apache-2.0) |
+| [libadb-android](https://github.com/MuntashirAkon/libadb-android) by Muntashir Al-Islam | Apache-2.0 / GPL-3.0-or-later (dual-licensed) |
 | [spake2-java](https://github.com/MuntashirAkon/spake2-java) | Apache-2.0 |
 | [Conscrypt](https://github.com/google/conscrypt) | Apache-2.0 |
 | [Bouncy Castle](https://www.bouncycastle.org/) | MIT-style Bouncy Castle licence |

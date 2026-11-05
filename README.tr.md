@@ -12,7 +12,7 @@
   <a href="https://github.com/burakztrk/xcpe-guard/releases/latest"><img src="https://img.shields.io/github/v/release/burakztrk/xcpe-guard?label=son%20APK&color=81C995&labelColor=151A22" alt="Son sürüm"></a>
   <a href="https://github.com/burakztrk/xcpe-guard/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/burakztrk/xcpe-guard/release.yml?branch=main&label=derleme&labelColor=151A22" alt="Derleme"></a>
   <img src="https://img.shields.io/badge/Android-8.0%2B-81C995?labelColor=151A22" alt="Android 8.0+">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/lisans-PolyForm%20Noncommercial-8AB4F8?labelColor=151A22" alt="Lisans"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/lisans-GPL--3.0-8AB4F8?labelColor=151A22" alt="Lisans"></a>
 </p>
 
 <p align="center">
@@ -134,6 +134,5 @@ alan adının DNS sorgusudur.
 
 ## Lisans
 
-[PolyForm Noncommercial 1.0.0](LICENSE). Kaynak kod açık. Ticari olmayan her amaçla kullanabilir, değiştirebilir ve
-paylaşabilirsin: kişisel kullanım, araştırma, eğitim, vakıflar, kamu kurumları. Ticari kullanım için yazarın yazılı
-izni gerekir.
+[GPL-3.0](LICENSE). Özgür ve açık kaynak: her amaçla kullanabilir, inceleyebilir, değiştirebilir ve paylaşabilirsin.
+Değiştirilmiş bir sürümü dağıtırsan, o sürümün de aynı lisansla açık kaynak kalması gerekir.
