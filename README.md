@@ -69,6 +69,52 @@ Play Protect is turned back on. Nothing is uninstalled, so everything can be und
 | Settings | Accessibility services, Play Protect, running processes, debugging state |
 | Network | Live TCP connections against the C2 addresses and MQTT ports 3885–3887, whether your DNS blocks the C2 names, Private DNS bypassing a home filter |
 
+## Full list: what it switches off
+
+Nothing is uninstalled. Each package is switched off with `pm disable-user` and force-stopped, so it can be switched
+back on at any time.
+
+| Package | What it does |
+|---|---|
+| `x.cpe`, `com.oemservice` | The backdoor itself: silently installs apps, runs commands, records the screen, presses keys |
+| `com.abc.nexus` | ABCNexus loader: downloads the ad-fraud and proxy modules |
+| `com.vs.grass` | Listed by Google as part of the same toolkit as ABCNexus |
+| `com.android.system.ntp` | Dropper posing as a clock service; reinstalls the botnet as a system app |
+| `com.android.sso.auth.handler` | Dropper that installs the AppSalt proxy SDK |
+| `com.ota.service` | HiddenView: clicks ads in the background |
+| `com.newtv.cboxtv` | Fission dynamic-code backdoor |
+| `com.gaganode`, `com.gaganode.sdk` | GaGaNode / IPCola proxy: routes strangers' traffic through your connection |
+| `com.oem.qa` | The maker's factory test app (BoxFactoryTest) with a silent APK installer. Not in Google's list, so it is marked suspicious. Never launched |
+
+## Full list: what else it fixes
+
+1. **Accessibility hook**: removes the backdoor's `AccessibilityKeyDetector` entry and leaves your other services alone.
+2. **Play Protect**: turns it back on if it was switched off (`package_verifier_user_consent=-1`).
+3. **Private DNS "Automatic"**: sets it to `off`, because it can bypass a home DNS filter such as AdGuard.
+4. **Packages that come back or appear**: switches off again anything that was off in the first scan and got re-enabled,
+   and any new system app that shows up without a firmware update (the sign of a dropper).
+
+## Full list: what it only reports
+
+- **Processes**: `oemservice`, `x.cpe`, `abc.nexus`, `vs.grass`, `system.ntp`, `sso.auth.handler`, `gaganode`,
+  `lw_android_agent`
+- **Native libraries**: `libseccomp_guard.so`, `libexploit.so`, `libnative_keys.so`, `libfleetshare.so`, `libjaguar.so`,
+  `libtraceroute.so`, `lw_android_agent`
+- **Properties**: `persist.networkstack.uninstall`, `persist.networkstack.skip_system_install`,
+  `persist.networkstack.install_time`
+- **`/oem` fingerprints**: the spare copy `xcpe_signed.apk` and Google's seven SHA-256 values. It cannot be deleted
+  without root and is harmless while its package stays off
+- **System folders**: a new `/system/priv-app` folder or a new `privapp-permissions` file raises an alarm
+- **Network**: live TCP connections to the C2 addresses `219.134.163.210`, `219.134.163.211`, `23.94.49.57`,
+  `38.145.197.135` and to MQTT ports 3885–3887
+- **DNS**: whether these seven C2 names are blocked: `mqtt.szbboys.com`, `ott.szbboys.com`, `mcstb.anyevonline.com`,
+  `intermedia-arts.tv`, `yokatvonline.com`, `linkfog.cn`, `hiddeninplainsight.top`
+- **New user apps**: listed once, for information
+- **Firmware fingerprint**: if it changes, the app stores a new reference instead of raising an alarm
+
+The app itself switches debugging on for each scan and off again, scans once a day (and 2 minutes after boot), and its
+only network traffic is the DNS lookup of the seven names above.
+
 ## Install
 
 1. Download [`xcpe-guard.apk`](https://github.com/burakztrk/xcpe-guard/releases/latest/download/xcpe-guard.apk), or scan

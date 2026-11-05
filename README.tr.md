@@ -70,6 +70,51 @@ yeniden açılır. Hiçbir şey kaldırılmaz; her şey geri alınabilir.
 | Ayarlar | Erişilebilirlik servisleri, Play Protect, çalışan süreçler, hata ayıklama durumu |
 | Ağ | C2 adreslerine ve 3885–3887 MQTT portlarına giden canlı TCP bağlantıları, DNS'in C2 adlarını engelleyip engellemediği, ev filtresini atlayan Özel DNS |
 
+## Tam liste: neleri kapatır
+
+Hiçbir şey kaldırılmaz. Her paket `pm disable-user` ile kapatılır ve durdurulur; istediğin zaman geri açılabilir.
+
+| Paket | Ne yapar |
+|---|---|
+| `x.cpe`, `com.oemservice` | Arka kapının kendisi: sessizce uygulama kurar, komut çalıştırır, ekranı kaydeder, tuşlara basar |
+| `com.abc.nexus` | ABCNexus yükleyici: reklam dolandırıcılığı ve proxy modüllerini indirir |
+| `com.vs.grass` | Google'ın ABCNexus ile aynı araç setinde listelediği paket |
+| `com.android.system.ntp` | Saat servisi kılığında dropper; botneti sistem uygulaması olarak yeniden kurar |
+| `com.android.sso.auth.handler` | AppSalt proxy SDK'sını kuran dropper |
+| `com.ota.service` | HiddenView: arka planda reklamlara tıklar |
+| `com.newtv.cboxtv` | Fission dinamik kod arka kapısı |
+| `com.gaganode`, `com.gaganode.sdk` | GaGaNode / IPCola proxy: yabancıların trafiğini senin bağlantından geçirir |
+| `com.oem.qa` | Üreticinin fabrika test uygulaması (BoxFactoryTest), sessiz APK kurucusu var. Google'ın listesinde yok, bu yüzden şüpheli olarak işaretlenir. Hiç başlatılmaz |
+
+## Tam liste: başka neleri düzeltir
+
+1. **Erişilebilirlik kancası**: arka kapının `AccessibilityKeyDetector` kaydını siler, diğer servislerine dokunmaz.
+2. **Play Protect**: kapatılmışsa (`package_verifier_user_consent=-1`) yeniden açar.
+3. **Özel DNS "Otomatik"**: AdGuard gibi ev DNS filtresini atlayabildiği için `off` yapar.
+4. **Geri gelen ya da beliren paketler**: ilk taramada kapalı olan ve yeniden açılan paketleri, ayrıca firmware
+   güncellemesi olmadan beliren yeni sistem uygulamalarını (dropper işareti) tekrar kapatır.
+
+## Tam liste: neleri yalnızca bildirir
+
+- **Süreçler**: `oemservice`, `x.cpe`, `abc.nexus`, `vs.grass`, `system.ntp`, `sso.auth.handler`, `gaganode`,
+  `lw_android_agent`
+- **Yerel kütüphaneler**: `libseccomp_guard.so`, `libexploit.so`, `libnative_keys.so`, `libfleetshare.so`,
+  `libjaguar.so`, `libtraceroute.so`, `lw_android_agent`
+- **Özellikler**: `persist.networkstack.uninstall`, `persist.networkstack.skip_system_install`,
+  `persist.networkstack.install_time`
+- **`/oem` parmak izleri**: yedek kopya `xcpe_signed.apk` ve Google'ın yedi SHA-256 değeri. Root olmadan silinemez,
+  paketi kapalı kaldığı sürece zararsız
+- **Sistem klasörleri**: yeni bir `/system/priv-app` klasörü ya da yeni bir `privapp-permissions` dosyası alarm verir
+- **Ağ**: `219.134.163.210`, `219.134.163.211`, `23.94.49.57`, `38.145.197.135` C2 adreslerine ve 3885–3887 MQTT
+  portlarına canlı TCP bağlantısı
+- **DNS**: şu yedi C2 adının engellenip engellenmediği: `mqtt.szbboys.com`, `ott.szbboys.com`,
+  `mcstb.anyevonline.com`, `intermedia-arts.tv`, `yokatvonline.com`, `linkfog.cn`, `hiddeninplainsight.top`
+- **Yeni kullanıcı uygulamaları**: bilgi olarak bir kez listelenir
+- **Firmware parmak izi**: değişirse alarm yerine yeni referans kaydedilir
+
+Uygulamanın kendisi her taramada hata ayıklamayı açıp yeniden kapatır, günde bir kez (ve açılıştan 2 dakika sonra)
+tarar; tek ağ trafiği yukarıdaki yedi adın DNS sorgusudur.
+
 ## Kurulum
 
 1. [`xcpe-guard.apk`](https://github.com/burakztrk/xcpe-guard/releases/latest/download/xcpe-guard.apk) dosyasını indir
