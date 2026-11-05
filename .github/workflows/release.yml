@@ -3,6 +3,12 @@ name: Release APK
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'skills/**'
+      - 'LICENSE'
+      - '.github/**'
   workflow_dispatch:
 
 permissions:

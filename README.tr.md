@@ -116,6 +116,28 @@ XCPE Guard kutunun içinde çalışır. Ağındaki her cihazı botnetin sunucula
 çıkan [AdGuard engelleme listesini](docs/adguard-blocklist.md) (154 kural) AdGuard Home'a ya da AdGuard
 sözdizimini anlayan herhangi bir DNS filtresine ekle. Uygulamadaki "C2 alan adları (DNS)" satırı o zaman yeşile döner.
 
+## Uygulama yüklemek istemiyorsan: yapay zekâ ajanı
+
+Kutuya hiçbir şey yüklemek istemezsen, kabuk erişimi olan bir yapay zekâ ajanı aynı ağdaki bir bilgisayardan adb ile aynı
+kontrolleri ve düzeltmeleri yapabilir. Güvenlik kurallarıyla birlikte adım adım yöntem
+[skills/xcpe-guard/SKILL.md](skills/xcpe-guard/SKILL.md) dosyasında.
+
+**Claude Code** (beceri olarak):
+
+```bash
+git clone --depth 1 https://github.com/burakztrk/xcpe-guard.git /tmp/xcpe-guard
+mkdir -p ~/.claude/skills && cp -r /tmp/xcpe-guard/skills/xcpe-guard ~/.claude/skills/
+```
+
+Sonra şunu iste: *"192.168.1.50 adresindeki Android TV kutumu XCPE botnetine karşı kontrol et ve temizle."*
+
+**Başka bir ajan** (Codex, Gemini CLI, Cursor…): repoyu klonlayıp ajanda aç; [AGENTS.md](AGENTS.md) onu aynı yönteme
+yönlendirir. Ya da şunu yapıştır: *"https://raw.githubusercontent.com/burakztrk/xcpe-guard/main/skills/xcpe-guard/SKILL.md
+dosyasını oku ve ona göre Android TV kutumu XCPE botnetine karşı kontrol et."*
+
+`adb` ve kutuda USB ya da Kablosuz hata ayıklama açık Geliştirici seçenekleri gerekir. Ajan bulduklarını gösterir ve
+herhangi bir şeyi kapatmadan önce onayını bekler. Kapatır, kaldırmaz; her şey geri alınabilir.
+
 ## Sınırlar
 
 - **Root yok.** Arka kapının salt-okunur `/oem` bölümündeki yedek kopyası silinemez. Paketi kapalı kaldığı sürece de

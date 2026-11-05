@@ -115,6 +115,28 @@ XCPE Guard works on the box. To keep every device on your network away from the 
 [AdGuard blocklist](docs/adguard-blocklist.md) (154 rules from the same Google report) to AdGuard Home, or to any
 DNS filter that understands AdGuard syntax. The app's "C2 names (DNS)" row then turns green.
 
+## No app? Use an AI agent
+
+If you would rather not install anything on the box, an AI coding agent with a shell can do the same checks and fixes
+over adb from a computer on the same network. The step-by-step procedure, with the safety rules, is in
+[skills/xcpe-guard/SKILL.md](skills/xcpe-guard/SKILL.md).
+
+**Claude Code** (as a skill):
+
+```bash
+git clone --depth 1 https://github.com/burakztrk/xcpe-guard.git /tmp/xcpe-guard
+mkdir -p ~/.claude/skills && cp -r /tmp/xcpe-guard/skills/xcpe-guard ~/.claude/skills/
+```
+
+Then ask: *"Check my Android TV box at 192.168.1.50 for the XCPE botnet and clean it."*
+
+**Any other agent** (Codex, Gemini CLI, Cursor…): clone the repo and open it in the agent; [AGENTS.md](AGENTS.md) points it
+to the same procedure. Or paste: *"Read https://raw.githubusercontent.com/burakztrk/xcpe-guard/main/skills/xcpe-guard/SKILL.md
+and follow it to check my Android TV box for the XCPE botnet."*
+
+You need `adb` and Developer options with USB or Wireless debugging on the box. The agent shows you what it found and
+waits for your yes before it disables anything. It disables, never uninstalls, so everything can be undone.
+
 ## Limits
 
 - **No root.** The backdoor's spare copy on the read-only `/oem` partition cannot be deleted. It cannot run either while
