@@ -51,6 +51,8 @@ same service; here it works for you, from inside the box, and nothing leaves you
 3. **Debugging permission**, either way:
    - **Wireless debugging (Android 11+)**: the app keeps a small keypad on top of Settings. Open
      "Pair device with pairing code" and type the code into the keypad; it pairs as soon as the sixth digit is in.
+     Some boxes never announce their pairing screen on the network, so the keypad cannot open by itself. Once wireless
+     debugging is on, the panel counts down and then asks for the port shown after the IP address, then the code.
    - **USB / network debugging**: when the box already listens on port 5555 (many of these boxes do), the TV asks
      "Allow debugging?" once.
 4. After the first connection the app grants itself `WRITE_SECURE_SETTINGS`, so for each scan it **switches debugging on,

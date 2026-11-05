@@ -126,6 +126,15 @@
     <string name="pair_enter">Type the 6-digit code shown behind this panel</string>
     <string name="pair_pairing">Pairing…</string>
     <string name="pair_done">Paired ✓  Opening XCPE Guard…</string>
+    <string name="pair_manual_in">No keypad yet? In %d s you can type the port and code yourself.</string>
+    <string name="pair_port_enter">First type the port shown on the pairing screen: the number after the colon (:) next to the IP address.</string>
+    <string name="pair_port_typed">Port: %s</string>
+    <string name="pair_back_settings">Back to Settings (%d s)</string>
+    <string name="pair_close">Close</string>
+    <string name="pair_failed_manual">Pairing failed (%s). Type the code again, or press ⌫ to type the port again. If the pairing screen was closed, open it again: the code and port change.</string>
+    <string name="mdns_start_failed">Automatic search could not start (mDNS error %d).</string>
+    <string name="mdns_resolve_failed">A pairing screen was seen but could not be read (mDNS error %d).</string>
+    <string name="mdns_other_device">A pairing screen was found on another device on the network, not on this one.</string>
 
     <string name="setup_title">Set up</string>
     <string name="setup_intro">XCPE Guard checks this device for the XCPE botnet that Google exposed, and switches it off. It needs the device\'s own debugging permission once.</string>

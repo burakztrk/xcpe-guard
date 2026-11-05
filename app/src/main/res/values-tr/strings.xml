@@ -125,6 +125,15 @@
     <string name="pair_enter">Bu panelin arkasında görünen 6 haneli kodu gir</string>
     <string name="pair_pairing">Eşleniyor…</string>
     <string name="pair_done">Eşlendi ✓  XCPE Guard açılıyor…</string>
+    <string name="pair_manual_in">Tuş takımı gelmedi mi? %d sn sonra port ve kodu kendin yazabilirsin.</string>
+    <string name="pair_port_enter">Önce eşleme ekranındaki portu yaz: IP adresinin yanındaki iki noktadan (:) sonraki sayı.</string>
+    <string name="pair_port_typed">Port: %s</string>
+    <string name="pair_back_settings">Ayarlar\'a dön (%d sn)</string>
+    <string name="pair_close">Kapat</string>
+    <string name="pair_failed_manual">Eşleme başarısız (%s). Kodu yeniden gir ya da portu yeniden yazmak için ⌫\'ye bas. Eşleme ekranı kapandıysa yeniden aç: kod ve port değişir.</string>
+    <string name="mdns_start_failed">Otomatik arama başlatılamadı (mDNS hatası %d).</string>
+    <string name="mdns_resolve_failed">Bir eşleme ekranı görüldü ama okunamadı (mDNS hatası %d).</string>
+    <string name="mdns_other_device">Ağdaki başka bir cihazda eşleme ekranı bulundu, bu cihazda değil.</string>
 
     <string name="setup_title">Kurulum</string>
     <string name="setup_intro">XCPE Guard bu cihazı Google\'ın ortaya çıkardığı XCPE botnetine karşı tarar ve onu kapatır. Bunun için cihazın kendi hata ayıklama iznine bir kez ihtiyacı var.</string>

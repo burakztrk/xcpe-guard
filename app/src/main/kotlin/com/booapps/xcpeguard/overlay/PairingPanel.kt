@@ -36,6 +36,7 @@ import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.Text
 import com.booapps.xcpeguard.R
 import com.booapps.xcpeguard.ui.Palette
+import com.booapps.xcpeguard.ui.Pill
 import com.booapps.xcpeguard.ui.XcpeTheme
 
 @Composable
@@ -47,12 +48,12 @@ fun PairingPanel(svc: PairingOverlayService) = XcpeTheme {
             .border(1.dp, Color(0x33FFFFFF), RoundedCornerShape(20.dp))
             .padding(20.dp)
             .onPreviewKeyEvent { e ->
-                if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
                 val d = digitOf(e.key)
                 when {
+                    e.key == Key.Back -> { if (e.type == KeyEventType.KeyUp) svc.back(); true }
+                    e.type != KeyEventType.KeyDown -> false
                     d != null -> { svc.digit(d); true }
                     e.key == Key.Backspace || e.key == Key.Delete -> { svc.backspace(); true }
-                    e.key == Key.Back && phase != PairingOverlayService.Phase.PAIRING -> { svc.finish(false); true }
                     else -> false
                 }
             },
@@ -70,7 +71,14 @@ fun PairingPanel(svc: PairingOverlayService) = XcpeTheme {
                     Spacer(Modifier.height(4.dp))
                 }
                 Text(stringResource(R.string.pair_waiting), color = Palette.muted, fontSize = 14.sp)
+                val left = svc.countdown.intValue
+                if (left > 0) {
+                    Spacer(Modifier.height(4.dp))
+                    Text(stringResource(R.string.pair_manual_in, left), color = Palette.muted, fontSize = 13.sp)
+                }
+                DiscoveryNote(svc)
             }
+            PairingOverlayService.Phase.PORT -> PortEntry(svc)
             PairingOverlayService.Phase.CODE, PairingOverlayService.Phase.FAILED -> CodeEntry(svc, phase)
             PairingOverlayService.Phase.PAIRING ->
                 Text(stringResource(R.string.pair_pairing), color = Palette.text, fontSize = 16.sp)
@@ -90,25 +98,68 @@ private fun Step(n: String, text: String) = Row(Modifier.padding(vertical = 4.dp
 }
 
 @Composable
+private fun DiscoveryNote(svc: PairingOverlayService) {
+    val text = when (svc.note.value) {
+        PairingDiscovery.Note.START_FAILED -> stringResource(R.string.mdns_start_failed, svc.noteCode.intValue)
+        PairingDiscovery.Note.RESOLVE_FAILED -> stringResource(R.string.mdns_resolve_failed, svc.noteCode.intValue)
+        PairingDiscovery.Note.OTHER_DEVICE -> stringResource(R.string.mdns_other_device)
+        null -> return
+    }
+    Spacer(Modifier.height(4.dp))
+    Text(text, color = Palette.muted, fontSize = 13.sp)
+}
+
+@Composable
+private fun PortEntry(svc: PairingOverlayService) {
+    val first = remember { FocusRequester() }
+    LaunchedEffect(Unit) { runCatching { first.requestFocus() } }
+    Text(stringResource(R.string.pair_port_enter), color = Palette.text, fontSize = 15.sp)
+    DiscoveryNote(svc)
+    Spacer(Modifier.height(8.dp))
+    Cells(5, svc.typedPort.value)
+    Spacer(Modifier.height(12.dp))
+    Keypad(svc, first)
+    Spacer(Modifier.height(8.dp))
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Pill(stringResource(R.string.pair_back_settings, PairingOverlayService.REARM_SECONDS), Modifier.weight(1f)) {
+            svc.hide()
+        }
+        Pill(stringResource(R.string.pair_close), Modifier.weight(1f)) { svc.finish(paired = false) }
+    }
+}
+
+@Composable
 private fun CodeEntry(svc: PairingOverlayService, phase: PairingOverlayService.Phase) {
     val first = remember { FocusRequester() }
     LaunchedEffect(phase) { runCatching { first.requestFocus() } }
+    val manual = svc.manual.value
     if (phase == PairingOverlayService.Phase.FAILED) {
-        Text(stringResource(R.string.pair_failed_type, svc.error.value), color = Palette.alarm, fontSize = 14.sp)
+        val failed = if (manual) R.string.pair_failed_manual else R.string.pair_failed_type
+        Text(stringResource(failed, svc.error.value), color = Palette.alarm, fontSize = 14.sp)
         Spacer(Modifier.height(6.dp))
     }
     Text(stringResource(R.string.pair_enter), color = Palette.muted, fontSize = 14.sp)
+    if (manual) Text(stringResource(R.string.pair_port_typed, svc.typedPort.value), color = Palette.muted, fontSize = 13.sp)
     Spacer(Modifier.height(8.dp))
-    val c = svc.code.value
+    Cells(6, svc.code.value)
+    Spacer(Modifier.height(12.dp))
+    Keypad(svc, first)
+}
+
+@Composable
+private fun Cells(count: Int, value: String) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        for (i in 0 until 6) {
+        for (i in 0 until count) {
             Box(
                 Modifier.weight(1f).height(48.dp).background(Color(0x22FFFFFF), RoundedCornerShape(10.dp)),
                 contentAlignment = Alignment.Center,
-            ) { Text(c.getOrNull(i)?.toString() ?: "", color = Palette.text, fontSize = 24.sp, textAlign = TextAlign.Center) }
+            ) { Text(value.getOrNull(i)?.toString() ?: "", color = Palette.text, fontSize = 24.sp, textAlign = TextAlign.Center) }
         }
     }
-    Spacer(Modifier.height(12.dp))
+}
+
+@Composable
+private fun Keypad(svc: PairingOverlayService, first: FocusRequester) {
     val rows = listOf("123", "456", "789", "<0>")
     for ((ri, row) in rows.withIndex()) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -119,7 +170,7 @@ private fun CodeEntry(svc: PairingOverlayService, phase: PairingOverlayService.P
                     onClick = {
                         when (k) {
                             '<' -> svc.backspace()
-                            '>' -> svc.submit()
+                            '>' -> svc.confirm()
                             else -> svc.digit(k)
                         }
                     },
