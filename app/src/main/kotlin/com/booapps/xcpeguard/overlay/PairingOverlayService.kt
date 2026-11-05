@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.view.Gravity
 import android.view.WindowManager
 import androidx.compose.runtime.mutableIntStateOf
@@ -20,11 +21,10 @@ import com.booapps.xcpeguard.Lang
 import com.booapps.xcpeguard.Prefs
 import com.booapps.xcpeguard.adb.AdbClient
 import com.booapps.xcpeguard.ui.MainActivity
-import io.github.muntashirakon.adb.android.AdbMdns
 import kotlin.concurrent.thread
 
 class PairingOverlayService : LifecycleService(), SavedStateRegistryOwner {
-    enum class Phase { WAITING, CODE, PAIRING, DONE, FAILED }
+    enum class Phase { WAITING, PORT, CODE, PAIRING, DONE, FAILED }
 
     private val saved = SavedStateRegistryController.create(this)
     override val savedStateRegistry: SavedStateRegistry get() = saved.savedStateRegistry
@@ -33,12 +33,25 @@ class PairingOverlayService : LifecycleService(), SavedStateRegistryOwner {
     val code = mutableStateOf("")
     val error = mutableStateOf("")
     val port = mutableIntStateOf(-1)
+    val manual = mutableStateOf(false)
+    val typedPort = mutableStateOf("")
+    val countdown = mutableIntStateOf(0)
+    val note = mutableStateOf<PairingDiscovery.Note?>(null)
+    val noteCode = mutableIntStateOf(0)
 
     private lateinit var wm: WindowManager
     private var view: ComposeView? = null
     private var params: WindowManager.LayoutParams? = null
-    private var mdns: AdbMdns? = null
+    private var discovery: PairingDiscovery? = null
     private val main = Handler(Looper.getMainLooper())
+    private var startedAt = 0L
+    private var manualAt = 0L
+    private val ticker = object : Runnable {
+        override fun run() {
+            checkManual()
+            main.postDelayed(this, 1000)
+        }
+    }
 
     override fun attachBaseContext(base: Context) = super.attachBaseContext(Lang.wrap(base))
 
@@ -47,6 +60,7 @@ class PairingOverlayService : LifecycleService(), SavedStateRegistryOwner {
         saved.performRestore(null)
         super.onCreate()
         running = true
+        startedAt = SystemClock.elapsedRealtime()
         wm = getSystemService(WindowManager::class.java)
         val v = ComposeView(this)
         v.setViewTreeLifecycleOwner(this)
@@ -66,24 +80,70 @@ class PairingOverlayService : LifecycleService(), SavedStateRegistryOwner {
         wm.addView(v, lp)
         view = v
         params = lp
-        mdns = AdbMdns(this, AdbMdns.SERVICE_TYPE_TLS_PAIRING) { _, p -> main.post { onPairingPort(p) } }
-            .also { it.start() }
+        discovery = PairingDiscovery(this, ::onPairingPort) { n, c ->
+            note.value = n
+            noteCode.intValue = c
+        }.also { it.start() }
+        main.post(ticker)
     }
 
     private fun onPairingPort(p: Int) {
         port.intValue = p
-        when {
-            p > 0 && phase.value == Phase.WAITING -> {
-                code.value = ""
-                phase.value = Phase.CODE
-                setFocusable(true)
+        if (p > 0) {
+            note.value = null
+            when (phase.value) {
+                Phase.WAITING, Phase.PORT -> showCode()
+                Phase.CODE, Phase.FAILED -> manual.value = false
+                else -> {}
             }
-            p <= 0 && (phase.value == Phase.CODE || phase.value == Phase.FAILED) -> {
-                code.value = ""
-                phase.value = Phase.WAITING
-                setFocusable(false)
-            }
+        } else if (!manual.value && (phase.value == Phase.CODE || phase.value == Phase.FAILED)) {
+            code.value = ""
+            phase.value = Phase.WAITING
+            setFocusable(false)
+            manualAt = 0L
         }
+    }
+
+    private fun showCode() {
+        manual.value = false
+        code.value = ""
+        error.value = ""
+        phase.value = Phase.CODE
+        setFocusable(true)
+    }
+
+    private fun checkManual() {
+        if (phase.value != Phase.WAITING) {
+            countdown.intValue = 0
+            return
+        }
+        val now = SystemClock.elapsedRealtime()
+        val wireless = runCatching { AdbClient.wirelessDebugging(this) }.getOrNull()
+        if (wireless == false) {
+            manualAt = 0L
+            countdown.intValue = 0
+            return
+        }
+        if (manualAt == 0L) {
+            val sinceStart = if (wireless == null) UNKNOWN_DELAY_MS else START_DELAY_MS
+            manualAt = maxOf(startedAt + sinceStart, now + WIRELESS_DELAY_MS)
+        }
+        val left = manualAt - now
+        if (left <= 0) openManual() else countdown.intValue = ((left + 999) / 1000).toInt()
+    }
+
+    private fun openManual() {
+        countdown.intValue = 0
+        if (port.intValue > 0) {
+            showCode()
+            return
+        }
+        manual.value = true
+        typedPort.value = ""
+        code.value = ""
+        error.value = ""
+        phase.value = Phase.PORT
+        setFocusable(true)
     }
 
     private fun setFocusable(on: Boolean) {
@@ -94,6 +154,12 @@ class PairingOverlayService : LifecycleService(), SavedStateRegistryOwner {
     }
 
     fun digit(d: Char) {
+        if (phase.value == Phase.PORT) {
+            if (typedPort.value.length >= 5) return
+            typedPort.value += d
+            if (typedPort.value.length == 5) confirmPort()
+            return
+        }
         if (phase.value == Phase.FAILED) {
             error.value = ""
             code.value = ""
@@ -105,14 +171,63 @@ class PairingOverlayService : LifecycleService(), SavedStateRegistryOwner {
     }
 
     fun backspace() {
-        if (phase.value == Phase.FAILED) { error.value = ""; phase.value = Phase.CODE }
-        code.value = code.value.dropLast(1)
+        when {
+            phase.value == Phase.PORT -> typedPort.value = typedPort.value.dropLast(1)
+            phase.value == Phase.FAILED && manual.value -> {
+                error.value = ""
+                typedPort.value = ""
+                phase.value = Phase.PORT
+            }
+            phase.value == Phase.FAILED -> {
+                error.value = ""
+                phase.value = Phase.CODE
+                code.value = code.value.dropLast(1)
+            }
+            phase.value == Phase.CODE && manual.value && code.value.isEmpty() -> phase.value = Phase.PORT
+            phase.value == Phase.CODE -> code.value = code.value.dropLast(1)
+        }
+    }
+
+    fun confirm() {
+        if (phase.value == Phase.PORT) confirmPort() else submit()
+    }
+
+    private fun confirmPort() {
+        val p = typedPort.value.toIntOrNull()
+        if (p == null || p !in 1..65535) {
+            typedPort.value = ""
+            return
+        }
+        code.value = ""
+        error.value = ""
+        phase.value = Phase.CODE
+    }
+
+    fun back() {
+        when {
+            phase.value == Phase.PAIRING || phase.value == Phase.DONE -> {}
+            manual.value && phase.value != Phase.PORT -> {
+                error.value = ""
+                phase.value = Phase.PORT
+            }
+            manual.value -> hide()
+            else -> finish(paired = false)
+        }
+    }
+
+    fun hide() {
+        manual.value = false
+        code.value = ""
+        error.value = ""
+        phase.value = Phase.WAITING
+        setFocusable(false)
+        manualAt = SystemClock.elapsedRealtime() + REARM_SECONDS * 1000L
     }
 
     fun submit() {
         val c = code.value
-        val p = port.intValue
-        if (c.length != 6 || p <= 0) return
+        val p = if (manual.value) typedPort.value.toIntOrNull() ?: -1 else port.intValue
+        if (phase.value != Phase.CODE || c.length != 6 || p <= 0) return
         phase.value = Phase.PAIRING
         thread(name = "xcpe-pair") {
             val result = runCatching {
@@ -145,13 +260,20 @@ class PairingOverlayService : LifecycleService(), SavedStateRegistryOwner {
 
     override fun onDestroy() {
         running = false
-        runCatching { mdns?.stop() }
+        main.removeCallbacks(ticker)
+        discovery?.stop()
+        discovery = null
         view?.let { runCatching { wm.removeView(it) } }
         view = null
         super.onDestroy()
     }
 
     companion object {
+        const val REARM_SECONDS = 20
+        private const val START_DELAY_MS = 30_000L
+        private const val WIRELESS_DELAY_MS = 20_000L
+        private const val UNKNOWN_DELAY_MS = 45_000L
+
         @Volatile var running = false
             private set
 

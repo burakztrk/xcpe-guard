@@ -24,6 +24,7 @@ jobs:
     env:
       VERSION_CODE: ${{ github.run_number }}
       HAS_KEY: ${{ secrets.KEYSTORE_BASE64 != '' }}
+      TEST_BUILD: ${{ github.ref != 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -53,6 +54,11 @@ jobs:
           cp app/build/outputs/apk/release/app-release.apk "xcpe-guard-1.0.${VERSION_CODE}.apk"
           cp app/build/outputs/apk/release/app-release.apk xcpe-guard.apk
           sha256sum xcpe-guard.apk > xcpe-guard.apk.sha256
+          if [ "$TEST_BUILD" = "true" ]; then
+            TEST_APK="xcpe-guard-1.0.${VERSION_CODE}-test.apk"
+            cp xcpe-guard.apk "$TEST_APK"
+            sha256sum "$TEST_APK" > "$TEST_APK.sha256"
+          fi
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -66,7 +72,7 @@ jobs:
           echo "::warning::KEYSTORE_BASE64 is not set. The APK was built with a throwaway debug key and uploaded as an artifact only; no release was published, because updates need the same key every time."
 
       - name: Publish release
-        if: env.HAS_KEY == 'true'
+        if: env.HAS_KEY == 'true' && env.TEST_BUILD != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
@@ -77,3 +83,17 @@ jobs:
             xcpe-guard.apk
             xcpe-guard-1.0.${{ github.run_number }}.apk
             xcpe-guard.apk.sha256
+
+      - name: Publish test build
+        if: env.HAS_KEY == 'true' && env.TEST_BUILD == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}-test
+          name: XCPE Guard 1.0.${{ github.run_number }} test (${{ github.ref_name }})
+          target_commitish: ${{ github.sha }}
+          prerelease: true
+          make_latest: false
+          body: Test build of branch ${{ github.ref_name }} at ${{ github.sha }}. Not a release; the latest release is unchanged.
+          files: |
+            xcpe-guard-1.0.${{ github.run_number }}-test.apk
+            xcpe-guard-1.0.${{ github.run_number }}-test.apk.sha256

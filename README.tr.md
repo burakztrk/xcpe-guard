@@ -52,6 +52,8 @@ Botnet de bu servisi kötüye kullanmıştı; burada senin için, kutunun içind
 3. **Hata ayıklama izni**, iki yoldan biriyle:
    - **Kablosuz hata ayıklama (Android 11+)**: uygulama Ayarlar'ın üstünde küçük bir tuş takımı tutar. "Eşleme kodu
      ile cihaz eşle"yi açıp kodu tuş takımına yazarsın; altıncı hane girilince eşleme kendiliğinden başlar.
+     Bazı kutular eşleme ekranını ağda hiç duyurmaz, bu yüzden tuş takımı kendiliğinden açılamaz. Kablosuz hata
+     ayıklama açıldıktan sonra panel geri sayar, ardından önce IP adresinin yanındaki portu, sonra kodu ister.
    - **USB / ağ hata ayıklama**: kutu 5555 portunda zaten dinliyorsa (bu kutuların çoğu öyle) TV bir kez
      "Hata ayıklamaya izin verilsin mi?" diye sorar.
 4. İlk bağlantıdan sonra uygulama kendine `WRITE_SECURE_SETTINGS` verir. Her taramada **hata ayıklamayı açar, tarar,
